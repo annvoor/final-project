@@ -2,9 +2,6 @@ import React from 'react'
 import { useState } from 'react'
 import './App.css'
 
-const dataURL = "localhost:3000"
-
-
 // display search bar at top, list all songs, and then bar at the bottom to switch between this an playlists?
 // place to add/change/delete songs/playlists on bottom bar
 export default class App extends React.Component {
@@ -47,7 +44,7 @@ function Search() {
   )
 }
 
-function Add(){
+function Add() {
   const [inputValue, updateInputValue] = useState("Add a Song")
 
   function inputUpdate(evt) {
@@ -64,7 +61,7 @@ function Add(){
   }
 
   return(
-    <form  id="addSongs">
+    <form id="addSongs">
       <input name="songAdd" value={inputValue} onChange={change} id="song-add-input"/>
       <button onClick={() => onSubmit(inputUpdate)} id="song-add-button">Submit</button>
     </form>
@@ -87,7 +84,7 @@ async function getSongData(request) {
 
 async function addSong(formData) {
   try {
-    const response = await fetch("https://example.com/posts", {
+    const response = await fetch("https://localhost:3000/addsong", {
       method: "POST",
       body: formData,
     });
