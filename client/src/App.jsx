@@ -51,7 +51,6 @@ function Add() {
     updateInputValue(evt.target.value)
     addSong(inputValue).then(res => {
       console.log(res)
-      console.log(inputValue)
     })
   }
 
@@ -60,13 +59,53 @@ function Add() {
     console.log(inputValue)
   }
 
+  // function onSubmit() {
+  //   addSong(inputValue).then(res => {
+  //     console.log(res)
+  //     console.log(inputValue)
+  //   })
+  // }
+
   return(
     <form id="addSongs">
       <input name="songAdd" value={inputValue} onChange={change} id="song-add-input"/>
-      <button onClick={() => onSubmit(inputUpdate)} id="song-add-button">Submit</button>
+      <button onClick={inputUpdate} id="song-add-button">Submit</button>
     </form>
   )
 }
+
+// function Add() {
+//   const [name, updateName] = useState("Song Name")
+//   const [album, updateAlbum] = useState("Album")
+//   const [artist, updateArtist] = useState("Artist")
+//   const [genre, updateGenre] = useState("Genre")
+//   const [mood, updateMood] = useState("Mood")
+
+// function onSubmit() {
+//   addSong(name, album, artist, genre, mood).then(res => {
+//     console.log(res)
+//     console.log(inputValue)
+//   })
+// }
+
+
+//   return(
+//     <div>
+//         <p>Name</p>
+//         <input value={name} onChange={evt => updateName(evt.target.value)} />
+//         <p>Artist</p>
+//         <input value={artist} onChange={evt => updateArtist(evt.target.value)} />
+//         <p>Album</p>
+//         <input value={album} onChange={evt => updateAlbum(evt.target.value)} />
+//         <p>Genre</p>
+//         <input value={genre} onChange={evt => updateGenre(evt.target.value)} />
+//         <p>Mood</p>
+//         <input value={mood} onChange={evt => updateMood(evt.target.value)} />
+
+//         <button onClick={() => onSubmit()}>Submit</button>
+//     </div>
+//       )
+// }
 
 // figure out how to use query/body/params and all that
 async function getSongData(request) {
@@ -74,25 +113,35 @@ async function getSongData(request) {
     return (data.json())
 }
 
-// async function addSong(formData) {
-//     const response = await fetch("https://localhost:3000/addsong", {
-//       method: "POST",
-//       body: formData,
-//     })
-//     return (response.json())
-// }
-
 async function addSong(formData) {
+  // const [res, updateRes] = useState(null)
   try {
-    const response = await fetch("https://localhost:3000/addsong", {
+    // console.log("formData" + formData)
+    const response = await fetch("http://localhost:3000/addsong", {
       method: "POST",
-      body: formData,
+      body: JSON.stringify(JSON.parse(formData)),
     });
     const result = await response.json();
+    // updateRes(result)
     console.log("Success:", result);
   } catch (error) {
     console.error("Error:", error);
   }
-  return(response.json())
+  // return(res)
 }
+
+
+// async function addSong(name, album, artist, genre, mood) {
+//   try {
+//     const response = await fetch("http://localhost:3000/addsong", {
+//       method: "POST",
+//       body: JSON.stringify({"name": {name}, "album": {album}, "artist": {artist}, "genre": {genre}, "mood": {mood}}),
+//     });
+//     const result = await response.json();
+//     console.log("Success:", result);
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+//   return(response.json())
+// }
 
