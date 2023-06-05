@@ -11,6 +11,7 @@ export default class App extends React.Component {
         {/* <Songs id="songs"/> */}
         <Add />
         <Search />
+        <Delete />
       </div>
     );
   }
@@ -41,6 +42,31 @@ function Search() {
         <div>{artist}</div>
       </div>
     </div>
+  )
+}
+
+function Delete() {
+  const [inputValue, updateInputValue] = useState("Delete a Song")
+  const [songDelete, updateSongDelete] = useState(null)
+
+  function change(evt) {
+    updateInputValue(evt.target.value)
+  }
+
+  function inputUpdate(evt) {
+    updateInputValue(evt.target.value)
+    deleteSong(inputValue).then(res => {
+      console.log(res)
+      updateSongDelete("Song Deleted!")
+    })
+  }
+
+  return(
+    <form id="addSongs">
+      <input name="songAdd" value={inputValue} onChange={change} id="song-add-input"/>
+      <button onClick={inputUpdate} id="song-add-button">Submit</button>
+      <div>{songDelete}</div>
+    </form>
   )
 }
 
@@ -147,3 +173,7 @@ async function addSong(formData) {
 //   return(response.json())
 // }
 
+async function deleteSong(song) {
+  const data = fetch("http://localhost:3000/deletesong?name="+String(song), { method: "DELETE"})
+  return (data.json)
+}
