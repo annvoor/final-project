@@ -115,19 +115,21 @@ async function getSongData(request) {
 
 async function addSong(formData) {
   // const [res, updateRes] = useState(null)
-  try {
-    // console.log("formData" + formData)
+  // try {
     const response = await fetch("http://localhost:3000/addsong", {
       method: "POST",
-      body: JSON.stringify(JSON.parse(formData)),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: formData,
     });
     const result = await response.json();
     // updateRes(result)
-    console.log("Success:", result);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-  // return(res)
+  //   console.log("Success:", result);
+  // } catch (error) {
+  //   console.error("Error:", error);
+  // }
+  return(result)
 }
 
 
